@@ -1,0 +1,57 @@
+@model PruebaFinal.Models.Actividades
+@{
+    ViewData["Title"] = "Actividades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var Actividades = ViewBag.Actividades;
+}
+<div class="col-12">
+    @if (TempData["MessageSuccess"] != null)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @TempData["MessageSuccess"]
+        </div>
+    }
+    @if (TempData["MessageError"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @TempData["MessageError"]
+        </div>
+    }
+</div>
+<div class="col-12">
+    <a href='@Url.Action("Create", "Actividades")' class="btn btn-info">Crear Actividad</a>
+</div>
+<table class="table mt-2">
+    <thead class="thead-dark">
+        <th>Id</th>
+        <th>Duracion llamada</th>
+        <th>Descripcion</th>
+        <th>Resolvio</th>
+        <th>Tpo de respuesta</th>
+        <th> Operaciones</th>
+    </thead>
+    <tbody>
+        @foreach (var row in Actividades)
+        {
+            <tr>
+                <td>@row.Id</td>
+                <td>@row.DurecionLlamada</td>
+                <td>@row.Descricion</td>
+                <td>@((row.Resolvio == 0)? "Resolvió": "Pendiente de respuesta")</td>
+                <td>@row.IdTipoNavigation.Tipo</td>
+                <td>
+                    <a href='@Url.Action("Edit", "Actividades")/@row.Id' class="btn btn-info">Editar</a>
+                    <a href='@Url.Action("Delete", "Actividades")/@row.Id' class="btn btn-warning">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
